@@ -3,36 +3,14 @@ import java.util.Scanner;
 public class Main {
     static Scanner scanner = new Scanner(System.in);
     static double balance = 1000.00;
+    static String loginArray[][] = {{"User1", "User2", "User3"},
+            {"1234", "5678", "9999"}};
+    static boolean accessGranted;
 
-
-    public static void main(String[] args)
-    {
-        // Initial account setup
+    public static void main(String[] args) {
         int option;
-        int password = 1234;
-        int userInput;
-        boolean accessGranted = false;
+        accessGranted = login();
 
-        // === User authentication ===
-        System.out.println("Welcome to the ATM!");
-        System.out.print("Enter your 4-digit password: ");
-        userInput = scanner.nextInt();
-        if(userInput==password){
-            accessGranted=true;
-        }
-        else{
-            for (int attempt = 2; attempt > 0; attempt--) {
-                System.out.printf("Enter your 4-digit password (%d attempt(s) left): ", attempt);
-                userInput = scanner.nextInt();
-
-                if (userInput == password) {
-                    accessGranted = true;
-                    break;
-                } else {
-                    System.out.println("Incorrect password.\n");
-                }
-            }
-        }
         if (accessGranted) {
             // === Main operation loop ===
             do {
@@ -60,7 +38,7 @@ public class Main {
 
                     case 3:
                         // Handle deposit
-                       deposit();
+                        deposit();
                         break;
 
                     case 4:
@@ -77,9 +55,10 @@ public class Main {
         } else {
             System.out.println("Account blocked due to too many failed login attempts.");
         }
-    scanner.close();
+        scanner.close();
     }
-    static void withdraw(){
+
+    static void withdraw() {
         double withdraw;
         System.out.print("Enter the amount you wish to withdraw: $");
         withdraw = scanner.nextDouble();
@@ -98,7 +77,8 @@ public class Main {
         balance -= withdraw;
         System.out.printf("Withdrawal of $%.2f successful.\nCurrent balance: $%.2f\n", withdraw, balance);
     }
-    static void deposit(){
+
+    static void deposit() {
         double deposit;
 
         System.out.print("Enter the amount you wish to deposit: $");
@@ -115,4 +95,36 @@ public class Main {
         System.out.printf("Deposit of $%.2f successful.\nCurrent balance: $%.2f\n", deposit, balance);
 
     }
-}
+
+    static boolean login() {
+        String username;
+        String password;
+
+        boolean usercheck = true;
+        boolean found = false;
+
+
+
+        // === User authentication ===
+        while (usercheck) {
+            System.out.println("Welcome to the ATM!");
+            System.out.print("Enter your login: ");
+            username = scanner.next();
+            System.out.print("Enter your password: ");
+            password = scanner.next();
+
+
+            for (int i = 0; i < loginArray[0].length; i++) {
+                if (username.equals(loginArray[0][i])&& password.equals(loginArray[1][i])){
+                    found = true;
+                    usercheck = false;
+                    System.out.printf("Olá %s\n", username);
+                    break;
+                }
+            }
+            if (!found) {
+                System.out.println("***************************\nUser and/or password invalid");
+            }
+            }
+            return true;}
+        }
