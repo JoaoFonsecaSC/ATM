@@ -1,16 +1,16 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
+    static double balance = 1000.00;
 
+
+    public static void main(String[] args)
+    {
         // Initial account setup
-        double balance = 1000.00;
-        int option = -1;
-        double withdraw = 0.00;
-        double deposit = 0.00;
+        int option;
         int password = 1234;
-        int userInput = 0;
+        int userInput;
         boolean accessGranted = false;
 
         // === User authentication ===
@@ -55,40 +55,12 @@ public class Main {
 
                     case 2:
                         // Handle withdrawal
-                        System.out.print("Enter the amount you wish to withdraw: $");
-                        withdraw = scanner.nextDouble();
-
-                        // Reject negative or zero withdrawals
-                        if (withdraw <= 0) {
-                            System.out.println("Invalid amount. Withdrawal must be greater than zero.\n");
-                            break;
-                        }
-
-                        // Check if there are enough funds
-                        if (withdraw > balance) {
-                            System.out.println("Insufficient funds. Returning to main menu.\n");
-                            break;
-                        }
-
-                        // Perform withdrawal
-                        balance -= withdraw;
-                        System.out.printf("Withdrawal of $%.2f successful.\nCurrent balance: $%.2f\n", withdraw, balance);
+                        withdraw();
                         break;
 
                     case 3:
                         // Handle deposit
-                        System.out.print("Enter the amount you wish to deposit: $");
-                        deposit = scanner.nextDouble();
-
-                        // Reject negative or zero deposits
-                        if (deposit <= 0) {
-                            System.out.println("Invalid amount. Deposit must be greater than zero.\n");
-                            break;
-                        }
-
-                        // Perform deposit
-                        balance += deposit;
-                        System.out.printf("Deposit of $%.2f successful.\nCurrent balance: $%.2f\n", deposit, balance);
+                       deposit();
                         break;
 
                     case 4:
@@ -105,7 +77,42 @@ public class Main {
         } else {
             System.out.println("Account blocked due to too many failed login attempts.");
         }
+    scanner.close();
+    }
+    static void withdraw(){
+        double withdraw;
+        System.out.print("Enter the amount you wish to withdraw: $");
+        withdraw = scanner.nextDouble();
 
-        scanner.close();
+        // Reject negative or zero withdrawals
+        if (withdraw <= 0) {
+            System.out.println("Invalid amount. Withdrawal must be greater than zero.\n");
+        }
+
+        // Check if there are enough funds
+        if (withdraw > balance) {
+            System.out.println("Insufficient funds. Returning to main menu.\n");
+        }
+
+        // Perform withdrawal
+        balance -= withdraw;
+        System.out.printf("Withdrawal of $%.2f successful.\nCurrent balance: $%.2f\n", withdraw, balance);
+    }
+    static void deposit(){
+        double deposit;
+
+        System.out.print("Enter the amount you wish to deposit: $");
+        deposit = scanner.nextDouble();
+
+        // Reject negative or zero deposits
+        if (deposit <= 0) {
+            System.out.println("Invalid amount. Deposit must be greater than zero.\n");
+            return;
+        }
+
+        // Perform deposit
+        balance += deposit;
+        System.out.printf("Deposit of $%.2f successful.\nCurrent balance: $%.2f\n", deposit, balance);
+
     }
 }
