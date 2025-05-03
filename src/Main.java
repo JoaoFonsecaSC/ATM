@@ -1,11 +1,11 @@
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
     static Scanner scanner = new Scanner(System.in);
     static double balance = 1000.00;
-    static String loginArray[][] = {{"User1", "User2", "User3"},
-            {"1234", "5678", "9999"}};
     static boolean accessGranted;
+
 
     public static void main(String[] args) {
         int option;
@@ -99,10 +99,13 @@ public class Main {
     static boolean login() {
         String username;
         String password;
+        HashMap<String, String> map = new HashMap<>();
+        map.put("User1", "1234");
+        map.put("User2", "5678");
+        map.put("User3", "999");
 
         boolean usercheck = true;
         boolean found = false;
-
 
 
         // === User authentication ===
@@ -114,17 +117,15 @@ public class Main {
             password = scanner.next();
 
 
-            for (int i = 0; i < loginArray[0].length; i++) {
-                if (username.equals(loginArray[0][i])&& password.equals(loginArray[1][i])){
-                    found = true;
-                    usercheck = false;
-                    System.out.printf("Olá %s\n", username);
-                    break;
-                }
+            if (map.containsKey(username) && map.get(username).equals(password)) {
+                found = true;
+                usercheck = false;
+                System.out.printf("\nOlá %s\n", username);
             }
+            ;
             if (!found) {
                 System.out.println("***************************\nUser and/or password invalid");
             }
-            }
-            return true;}
+        }
+    return true;}
         }
